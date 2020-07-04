@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VueJs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.4.6/tailwind.min.css">
+
+</head>
+
+<body>
+
+
+
+
+    <div id="app" class="container mx-auto">
+        <!-- {{icons}} -->
+        <table>
+            <tr>
+                <th class="bg-blue-500 text-blue-100 px-2 py-5">Name</th>
+                <th class="bg-blue-500 text-blue-100 px-2 py-5">Path</th>
+            </tr>
+
+            <tr v-for="icon in icons">
+                <td class="py-5 text-sm">{{ icon.properties.name }}</td>
+                <td class="py-5 ">{{ icon.icon.paths }}</td>
+            </tr>
+
+        </table>
+    </div><!-- .container -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data() {
+                return {
+                    url: 'feed.json',
+                    icons: []
+                }
+            },
+            methods: {
+                getIcons() {
+                    fetch(this.url)
+                        .then(response => response.json())
+                        .then(data => this.icons.push(...data.icons));
+                }
+            },
+            mounted() {
+                this.getIcons();
+            }
+        })
+    </script>
+</body>
+
+</html>
